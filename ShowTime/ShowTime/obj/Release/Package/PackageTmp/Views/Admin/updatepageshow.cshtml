@@ -1,0 +1,77 @@
+﻿@model ShowTime.Models.Show
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>buytiket</title>
+    <script src="~/Scripts/jquery-2.2.0.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+    <link href="~/css/bootstrap-slider.css" rel="stylesheet">
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/jumbotron.css" rel="stylesheet">
+    <style>
+        .well {
+            min-height: 450px;
+        }
+    </style>
+</head>
+<body>
+
+        <div style="text-align:right; position:center">
+            @using (@Html.BeginForm("updateshow", "Admin"))
+            {
+                <div class="well">
+                    <div class="col-sm-6 form-group">
+
+                        <label>שם ההופעה</label>
+                        @Html.TextBoxFor(m => m.ID, new { @placeholder = "שם ההופעה", @class = "form-control",@type="hidden", Value = Model.ID })<br />
+                        @Html.TextBoxFor(m => m.Name, new { @placeholder = "שם ההופעה", @class = "form-control", Value = Model.Name })<br />
+                        <span style="color:red">@Html.ValidationMessageFor(x => x.Name)</span>
+                    </div>
+                    <div class="col-sm-6 form-group">
+
+                        <label>תאריך</label>
+                        <input type="number" name="Day" min="1" max="31"value=@Model.Date.ToString().Split('/')[0]><input type="number" name="Month" min="1" max="12"value=@Model.Date.ToString().Split('/')[1]><input type="number" name="Year" min="2015" max="2100"value=@Model.Date.ToString().Split('/')[2]>
+                        @Html.TextBoxFor(m => m.Date, new { @placeholder = "תאריך", @class = "form-control",@type="hidden", Value = Model.Date.ToString().Split(' ')[0] })<br />
+                        <span style="color:red">@Html.ValidationMessageFor(x => x.Date)</span>
+                    </div><div class="col-sm-6 form-group">
+                        <label>מיקום</label>
+                        @Html.TextBoxFor(m => m.Loc, new { @placeholder = "מיקום ", @class = "form-control", Value = Model.Loc })<br />
+                        <span style="color:red">@Html.ValidationMessageFor(x => x.Loc)</span>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>מחיר</label>
+                        @Html.TextBoxFor(m => m.Price, new { @placeholder = "מחיר", @class = "form-control", Value = Model.Price })<br />
+                        <span style="color:red">@Html.ValidationMessageFor(x => x.Price)</span>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>הערות</label>
+                        @Html.TextBoxFor(m => m.Commits, new { @placeholder = "הערות", @class = "form-control", Value = Model.Commits })<br />
+                        <span style="color:red">@Html.ValidationMessageFor(x => x.Commits)</span>
+                    </div>
+
+
+                    <input type="submit" value="עדכן הופעה" class="btn btn-lg btn-primary" />
+
+
+
+                </div>
+            }
+       
+
+        </div>
+
+        <script type="text/javascript" src="http://seiyria.com/bootstrap-slider/dependencies/js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap-slider.js"></script>
+   
+
+    </body>
+</html>

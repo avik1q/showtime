@@ -1,0 +1,123 @@
+﻿@model ShowTime.Models.Admin
+
+@{
+    Layout = null;
+}
+
+
+
+
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>דף ניהול</title>
+    <link rel="icon" href="../../favicon.ico">
+
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="~/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/jumbotron.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="~/css/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="~/css/js/html5shiv.min.js"></script>
+      <script src="~/css/js/respond.min.js"></script>
+    <![endif]-->
+
+    <meta name="NetsparkQuiltingResult" total-length="5106" removed="0" rules-found="w2845,w3477,w7694,w221,w4318,w8192,w3281,w5783" />
+</head>
+
+<body>
+
+    @Html.Partial("ToolBar")
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron" style="text-align:right">
+        <div class="container">
+            <h1>דף מנהל</h1>
+            <p>.שלום לך מנהל יקר בדף זה תוכל לנהל את כל האתר <br /> כולל עידכון מחיקה והוספה של הופעות וסרטונים </p>
+
+        </div>
+    </div>
+    @{
+        if (ViewData["Error"] != null)
+        {
+            <div class="alert alert alert-danger">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p class="text-right"><strong> שגיאה </strong> @ViewData["Error"]</p>
+
+            </div>
+        }
+        if (ViewData["Ok"] != null)
+        {
+            <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p class="text-right"><strong> !הפעולה עברה בהצלחה </strong> @ViewData["Ok"]</p>
+
+            </div>
+        }
+
+    }
+    <div class="container" style="text-align:right">
+        <!-- Example row of columns  pull-right -->
+        <div class="row">
+            <div class="col-md-4">
+                <h2>דף ניהול הופעה חדשה </h2>
+                <p>הוספה עידכון ומחיקה של הופעות</p>
+                @using (Html.BeginForm("addshow", "Admin"))
+                {
+                    <button class="btn btn-info" type="submit">לדף ניהול הופעות</button>
+                }
+            </div>
+            <div class="col-md-4">
+                <h2>דף ניהול הופעות מהעבר</h2>
+                <p>הוספה עידכון ומחיקה של סירטונים מהופעות בעבר</p>
+                @using (Html.BeginForm("addpastshow", "Admin"))
+                {
+                    <button class="btn btn-info" type="submit">לדף ניהול הופעות מהעבר</button>
+                }
+            </div>
+            <div class="col-md-4">
+                <h2>צפיה בהזמנות</h2>
+                <p>צפיה בהזמנות</p>
+                @using (Html.BeginForm("ViewOrders", "Admin"))
+                {
+                    <button class="btn btn-info" type="submit">צפה בהזמנות</button>
+                }
+            </div>
+
+        </div>
+
+        <hr>
+
+        <footer>
+            <p>&copy; 2015 Company, Inc.</p>
+        </footer>
+    </div> <!-- /container -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="~/css/js/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="~/css/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="~/css/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,133 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex">
+
+    <title>Contact us page - Bootsnipp.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <style type="text/css">
+        .jumbotron {
+            background: #358CCE;
+            color: #FFF;
+            border-radius: 0px;
+        }
+
+        .jumbotron-sm {
+            padding-top: 24px;
+            padding-bottom: 24px;
+        }
+
+        .jumbotron small {
+            color: #FFF;
+        }
+
+        .h1 small {
+            font-size: 24px;
+        }
+    </style>
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+
+    <meta name="NetsparkQuiltingResult" total-length="4912" removed="0" rules-found="w2845,w3469,w3470,w3471,w3583,w7694,w3477,w3281" />
+</head>
+<body>
+    @Html.Partial("ToolBar")
+    <div class="jumbotron jumbotron-sm" style="padding-top: 50px;">
+        <div class="container" >
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <h1 class="h1" style="text-align:right">
+                       צור קשר <small>הרגש חופשי לצור קשר</small>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="well well-sm">
+                    <form action="">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name" class="pull-right">
+                                        שם
+                                    </label>
+                                    <input type="text" class="form-control" id="name" placeholder="שם" required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="pull-right">כתובת האימייל</label><br />
+                                    <div class="input-group">
+
+                                        <input type="email" class="form-control" id="email" placeholder="אימייל" required="required" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-envelope"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="subject" class="pull-right">
+                                       נושא
+                                    </label>
+                                    <select id="subject" name="subject" class="form-control" required="required">
+                                        <option value="na" selected="">בחר באפשרות אחת</option>
+                                        <option value="service">בניית אתרים</option>
+                                        <option value="suggestions">תיכנות</option>
+                                        <option value="product">סתם לקשקש</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name" class="pull-right">
+                                        הודעה
+                                    </label>
+                                    <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required"
+                                              placeholder="תוכן ההודעה"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-primary pull-right" id="btnContactUs" onclick="foo()">
+                                    שלח הודעה
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <form>
+                    <legend><span class="glyphicon glyphicon-globe"></span>&nbsp;לבניית אתרים צור קשר</legend>
+                    <address>
+                        <strong>אבי קרבול</strong><br>
+                       <a href=" https://il.linkedin.com/in/avikarbol">לינקדין</a> <br>
+
+                        <abbr title="Phone">
+                            P:  (972) 0546307159
+                        </abbr>
+                    </address>
+                    <address>
+                        <strong>אבי קרבול- מומחה <br /> ASP.NET</strong><br>
+                        <a href="mailto:avik1q@gmail.com">avik1q@gmail.com</a>
+                    </address>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function foo() {
+            alert(" זאת מערכת לדוגמה ההודעה לא באמת נשלחה")
+        }
+    </script>
+</body>
+</html>

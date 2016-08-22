@@ -1,0 +1,205 @@
+﻿@model ShowTime.Models.Order
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>buytiket</title>
+    <script src="~/Scripts/jquery-2.2.0.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+    <link href="~/css/bootstrap-slider.css" rel="stylesheet">
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/jumbotron.css" rel="stylesheet">
+    <style>
+        .well {
+            min-height: 350px;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align:right; position:center">
+        @using (@Html.BeginForm("OrderTiket", "User"))
+        {
+
+            <div class="col-sm-6 form-group">
+                <div class="well">
+                    <label>שם ההופעה</label>
+                    @Html.TextBoxFor(m => m.Show, new { @placeholder = "שם ההופעה", @type = "hidden", @class = "form-control", Value = ViewData["ShowID"] })<br />
+                    <span style="color:red">@Html.ValidationMessageFor(x => x.Show)</span>
+                    <input type="text" readonly="readonly" value=@ViewData["ShowName"] class="form-control" />
+
+
+                    <div class="col-sm-6 form-group">
+                        <label>מספר הכרטיסים</label>
+                        @Html.TextBoxFor(m => m.Amount, new { @placeholder = "מספר כרטיסים", @class = "form-control", Value = "1" })<br />
+                        <span style="color:red">@Html.ValidationMessageFor(x => x.Amount)</span>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label>שמך</label>
+                        @Html.TextBoxFor(m => m.Name, new { @readonly = "readonly", @placeholder = "שם ", @class = "form-control", Value = Session["User"] })<br />
+                        <span style="color:red">@Html.ValidationMessageFor(x => x.Name)</span>
+                    </div>
+                    <br />
+                    <div class="col-sm-4 form-group">
+                        <label>מספר כרטיס אשראי</label>
+                        <input type="text"
+                               onkeypress="if ( isNaN(this.value + String.fromCharCode(event.keyCode) )) return false;" class = "form-control" required="required" />
+                    </div>
+
+                    <div class="col-sm-4 form-group">
+                        <label>תעודת זהות</label>
+                        <input type="text"
+                               onkeypress="if ( isNaN(this.value + String.fromCharCode(event.keyCode) )) return false;" class = "form-control" required="required" />
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        
+                        <form id="paymentForm" class="form-horizontal" >
+                            <div class="form-group">
+                               
+                                <div class="col-xs-6">
+                                    <label>שנה</label>
+                                    <select class="form-control">
+                                        <option>2016</option>
+                                        <option>2017</option>
+                                        <option>2018</option>
+                                        <option>2019</option>
+                                        <option>2020</option>
+                                        <option>2021</option>
+                                        <option>2022</option>
+                                        <option>2023</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-6">
+                                        <label>חודש</label>
+                                        <select class="form-control">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            <option>6</option>
+                                            <option>7</option>
+                                            <option>8</option>
+                                            <option>9</option>
+                                            <option>10</option>
+                                            <option>11</option>
+                                            <option>12</option>
+                                        </select>
+                                        </div>
+                                    </div>
+                            </div>
+                        </form>
+                   
+                        </div>
+                    <div class="col-xs-2">
+    <label>תוקף</label>
+</div>
+                        <input type="submit" value="הזמן כרטיסים" class="btn btn-lg btn-primary" />
+                    </div>
+
+
+            </div>
+        }
+    </div>
+
+
+    <script>
+$(document).ready(function() {
+    $('#paymentForm').formValidation({
+        framework: 'bootstrap',
+        icon: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            expMonth: {
+                row: '.col-xs-3',
+                validators: {
+                    notEmpty: {
+                        message: 'The expiration month is required'
+                    },
+                    digits: {
+                        message: 'The expiration month can contain digits only'
+                    },
+                    callback: {
+                        message: 'Expired',
+                        callback: function(value, validator, $field) {
+                            value = parseInt(value, 10);
+                            var year         = validator.getFieldElements('expYear').val(),
+                                currentMonth = new Date().getMonth() + 1,
+                                currentYear  = new Date().getFullYear();
+                            if (value < 0 || value > 12) {
+                                return false;
+                            }
+                            if (year == '') {
+                                return true;
+                            }
+                            year = parseInt(year, 10);
+                            if (year > currentYear || (year == currentYear && value >= currentMonth)) {
+                                validator.updateStatus('expYear', 'VALID');
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            },
+            expYear: {
+                row: '.col-xs-3',
+                validators: {
+                    notEmpty: {
+                        message: 'The expiration year is required'
+                    },
+                    digits: {
+                        message: 'The expiration year can contain digits only'
+                    },
+                    callback: {
+                        message: 'Expired',
+                        callback: function(value, validator, $field) {
+                            value = parseInt(value, 10);
+                            var month        = validator.getFieldElements('expMonth').val(),
+                                currentMonth = new Date().getMonth() + 1,
+                                currentYear  = new Date().getFullYear();
+                            if (value < currentYear || value > currentYear + 10) {
+                                return false;
+                            }
+                            if (month == '') {
+                                return false;
+                            }
+                            month = parseInt(month, 10);
+                            if (value > currentYear || (value == currentYear && month >= currentMonth)) {
+                                validator.updateStatus('expMonth', 'VALID');
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+    </script>
+    <script type="text/javascript" src="http://seiyria.com/bootstrap-slider/dependencies/js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-slider.js"></script>
+    <script type="text/javascript">
+        $("#ex8").slider({
+            tooltip: 'always'
+        });
+        function updateAmonut() {
+            $("#Amount").text = $("#ex8").text;
+        }
+    </script>
+</body>
+</html>

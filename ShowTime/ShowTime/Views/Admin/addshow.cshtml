@@ -1,0 +1,194 @@
+﻿@model ShowTime.ViewModel.ShowVM
+@using ShowTime.Models
+
+<html>
+<head>
+    <title>דף ניהול הופעות</title>
+    <!-- Bootstrap core CSS -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="~/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/jumbotron.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="~/css/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="~/css/js/html5shiv.min.js"></script>
+      <script src="~/css/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="~/Scripts/jquery-2.2.0.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <meta name="NetsparkQuiltingResult" total-length="5106" removed="0" rules-found="w2845,w3477,w7694,w221,w4318,w8192,w3281,w5783" />
+</head>
+<body>
+    @Html.Partial("ToolBar")
+    <div class="jumbotron">
+        <div class="container" style="text-align:right">
+            <h1>דף ניהול הופעות</h1>
+            <p>בדף זה יש אפשרות להוסיף למחוק ולערוך הופעות שיופיעו באתר</p>
+        </div>
+    </div>
+    <div class="container marketing">
+        <div class="row"></div></div>
+            <table class="table table-striped table-bordered text-center" style="text-align:center">
+                <tr style="color:blue">
+                    <th style="text-align:center">     </th>
+                    <th style="text-align:center">     </th>
+                    <th style="text-align:center">הערות</th>
+                    <th style="text-align:center">מחיר לכרטיס</th>
+                    <th style="text-align:center">מיקום ההופעה</th>
+                    <th style="text-align:center">תאריך</th>
+                    <th style="text-align:center">שם ההופעה</th>
+
+
+
+                </tr>
+                @{
+                    foreach(Show show in Model.showlist)
+                    {
+
+                            <tr style="color:black">
+                                <td>
+                                    <form method="get" action="deleteshow">
+                                        <input name="ref" type="hidden" value=@show.ID />
+                                        <input type="submit" value="מחק" class="btn btn-sm btn-danger" />
+                                    </form>
+                                </td>
+                                                               
+                            <td>
+                                <form method="get" action="updatepageshow">
+                                    <input name="ref" type="hidden" value=@show.ID />
+                                    <input type="submit" value="עדכן" class="btn btn-sm btn-info" />
+                                </form>
+                                
+                            </td>
+
+                                <td>
+                                    @if (show.Commits != null)
+                                    {
+                                    @Html.Label(show.Commits)
+                                    }
+                                    <br />
+                                    <span style="color:red">@Html.ValidationMessageFor(x => show.Commits)</span>
+                                </td>
+                                <td>
+                                    @Html.Label(show.Price.ToString())
+
+                                    <br />
+                                    <span style="color:red">@Html.ValidationMessageFor(x => show.Price)</span>
+                                </td>
+                                <td>
+                                    @Html.Label(show.Loc)
+
+                                    <br />
+                                    <span style="color:red">@Html.ValidationMessageFor(x => show.Loc)</span>
+                                </td>
+
+                                <td>
+                                    @Html.Label(show.Date.ToString().Split(' ')[0])
+
+                                    <br />
+                                    <span style="color:red">@Html.ValidationMessageFor(x => show.Date)</span>
+                                </td>
+                                <td>
+                                    @Html.Label(show.ID.ToString())
+                                    @Html.Label(show.Name)
+
+                                    <br />
+                                    <span style="color:red">@Html.ValidationMessageFor(x => show.Name)</span>
+                                </td>
+
+
+
+
+
+
+                            </tr>
+
+                        
+                    }
+                }
+          
+            </table>
+@using (@Html.BeginForm("newshow", "Admin"))
+{
+            <h1 style="text-align:right">הוסף הופעה חדשה</h1>
+            <table class="table table-striped table-bordered text-center" style="text-align:center">
+                <tr style="color:blue">
+                    <th style="text-align:center">     </th>
+                    <th style="text-align:center">הערות</th>
+                    <th style="text-align:center">מחיר לכרטיס</th>
+                    <th style="text-align:center">מיקום ההופעה</th>
+                    <th style="text-align:center">תאריך</th>
+                    <th style="text-align:center">שם ההופעה</th>
+
+
+                </tr>
+
+                    <tr style="color:black">
+                        <td>
+                            <input type="submit" value="הוסף" class="btn btn-sm btn-success" />
+                        </td>
+
+                        <td>
+                            @Html.TextBoxFor(m => Model.shows.Commits)
+
+                            <br />
+                            <span style="color:red">@Html.ValidationMessageFor(x => Model.shows.Commits)</span>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => Model.shows.Price)
+
+                            <br />
+                            <span style="color:red">@Html.ValidationMessageFor(x => Model.shows.Price)</span>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => Model.shows.Loc)
+
+                            <br />
+                            <span style="color:red">@Html.ValidationMessageFor(x => Model.shows.Loc)</span>
+                        </td>
+                        <td>
+                            <input type="number" name="Day" min="1" max="31" value=@Model.shows.Date.ToString().Split('/')[0]><input type="number" name="Month" min="1" max="12" value=@Model.shows.Date.ToString().Split('/')[1]><input type="number" name="Year" min="2016" max="2100" value="2016">
+
+                            <br />
+                            <span style="color:red">@Html.ValidationMessageFor(x => Model.shows.Date)</span>
+                        </td>
+
+
+
+                        <td>
+                            @Html.TextBoxFor(m => Model.shows.Name)
+
+                            <br />
+                            <span style="color:red">@Html.ValidationMessageFor(x => Model.shows.Name)</span>
+                        </td>
+                    </tr>
+
+               
+
+            </table>
+                }
+    <hr>
+
+            <footer>
+                <p>&copy; 2015 Company, Inc.</p>
+            </footer>
+            <!-- /container -->
+            <!-- Bootstrap core JavaScript
+            ================================================== -->
+            <!-- Placed at the end of the document so the pages load faster -->
+            <script src="~/css/js/jquery.min.js"></script>
+            <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+            <script src="~/css/js/bootstrap.min.js"></script>
+            <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+            <script src="~/css/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

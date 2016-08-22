@@ -1,0 +1,85 @@
+﻿@model ShowTime.ViewModel.PastShowVM
+@using ShowTime.Models
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>הופעות מהעבר</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="~/css/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="~/css/js/ie-emulation-modes-warning.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="~/css/js/html5shiv.min.js"></script>
+      <script src="~/css/js/respond.min.js"></script>
+    <![endif]-->
+    <!-- Custom styles for this template -->
+    <link href="~/css/jumbotron.css" rel="stylesheet">
+    <style>
+        .vid {
+            position: relative;
+            padding-bottom: 56.25%;
+            padding-top: 30px;
+            height: 0;
+            overflow: hidden;
+        }
+
+            .vid iframe,
+            .vid object,
+            .vid embed {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+    </style>
+</head>
+<body>
+    @Html.Partial("ToolBar")
+    <div> 
+        <div class="jumbotron" style="text-align:center">
+            <div class="container">
+                <h1>הופעות מהעבר</h1>
+                <p>כאן נתן לצפות בסירטונים של הופעות מהעבר</p>
+            </div>
+        </div>
+        <div class="container">
+            <!-- start YouTube -->
+            <div class="row">
+                
+                @foreach(PastShow show in Model.pastshowlist) {
+                <div class="col-md-4">
+                <h3>@show.Name</h3>
+                    <div class="vid">
+                    
+                        <iframe width="560" height="315" src="//@show.URL" allowfullscreen=""></iframe>
+                    </div><!--./vid -->
+
+                </div><!--.col -->
+                }
+
+
+            </div><!--./row -->
+
+        </div><!--./container end YouTube -->
+    </div>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="~/css/js/jquery.min.js"></script>
+    <script src="~/css/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="~/css/js/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="~/css/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

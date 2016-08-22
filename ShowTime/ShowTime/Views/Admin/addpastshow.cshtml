@@ -1,0 +1,139 @@
+﻿@model ShowTime.ViewModel.PastShowVM
+@using ShowTime.Models
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>צפיה במלאי</title>
+    <script src="~/Scripts/jquery-2.2.0.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="~/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/jumbotron.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="~/css/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="~/css/js/html5shiv.min.js"></script>
+      <script src="~/css/js/respond.min.js"></script>
+    <![endif]-->
+
+    <meta name="NetsparkQuiltingResult" total-length="5106" removed="0" rules-found="w2845,w3477,w7694,w221,w4318,w8192,w3281,w5783" />
+    <script type="text/javascript" language="javascript">
+        function foo() {
+            var name;
+            name = "";
+            name = document.getElementById("URL").value;
+            document.getElementById("url1").src = "//"+name;
+        };
+
+    </script> 
+</head>
+
+<body>
+    @Html.Partial("ToolBar")
+    <div class="jumbotron">
+        <div class="container" style="text-align:right">
+            <h1>סירטונים של הופעות מהעבר</h1>
+            <p>דף ניהול הוספה הסרה ועדכון של סירטונים מהעבר של הופעות</p>
+        </div>
+    </div>
+    @{
+        if (ViewData["Error"] != null)
+        {
+            <div class="alert alert alert-danger">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p class="text-right"> @ViewData["Error"] <strong>שגיאה</strong></p>
+            </div>
+        }
+        if (ViewData["Ok"] != null)
+        {
+            <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p class="text-right"><strong> @ViewData["Ok"]</strong> </p>
+            </div>
+        }
+
+    }
+    <div>
+        <div class="container marketing">
+            <div class="row">
+                @{
+                    foreach (PastShow item in Model.pastshowlist)
+                    {
+
+                        <div class="col-lg-4">
+                            <iframe width="300" height="200" src="//@item.URL" allowfullscreen=""></iframe>
+                            <h3>@item.Name</h3>
+                            @using (@Html.BeginForm("updatePastShow", "Admin", FormMethod.Post))
+                            {
+                                <p>
+                                    <input id="Text1" name="Text1" type="hidden" value="@item.ID" />
+                                    @Html.TextBoxFor(m => item.Name, new { @class = "input-field", Value = @item.Name })&nbsp;&nbsp;&nbsp;<input id="Submit1" name="sub" type="submit" class="btn btn-primary" value="לשינוי שם" /><br />
+                                    <span style="color:red">@Html.ValidationMessageFor(m => item.Name)</span><br />
+                                    @Html.TextBoxFor(m => item.ID, new { @class = "input-field", @type = "hidden" })
+                                    @Html.TextBoxFor(m => item.URL, new { @class = "input-field", Value = @item.URL })&nbsp;&nbsp;&nbsp;<input id="Submit1" name="sub" type="submit" class="btn btn-primary" value="לשינוי סירטון" /><br />
+                                    <span style="color:red">@Html.ValidationMessageFor(m => item.URL)</span>
+
+
+
+                                </p>
+                            }
+
+                            <form action="deletepastshow" method="post">
+
+                                <input id="Text1" name="ref" type="hidden" value="@item.ID" />
+                                <input id="Submit1" name="sub" type="submit" class="btn btn-default" value="מחק" />
+                            </form>
+
+                        </div><!-- /.col-lg-4 -->
+                    }
+                }
+                <div class="col-lg-4">
+                    <iframe  id ="url1" width="300" height="200" src="//" allowfullscreen=""></iframe>
+                    
+                    @using (@Html.BeginForm("newpastshow", "Admin"))
+                    {
+                        <p>
+
+                            @Html.TextBoxFor(m => Model.pastshow.Name, new { @class = "input-field" })
+                            <span style="color:red">@Html.ValidationMessageFor(m => Model.pastshow.Name)</span><br />
+                            @Html.TextBoxFor(m => Model.pastshow.ID, new { @class = "input-field", @type = "hidden" })
+                            <input type="text" id="URL" name="URL" class = "input-field" onchange="foo()"/>
+                            <span style="color:red">@Html.ValidationMessageFor(m => Model.pastshow.URL)</span><br />
+                            <input id="Submit1" name="sub" type="submit" class="btn btn-success" value="הוספת סירטון" /><br />
+
+
+                        </p>
+                    }
+
+
+                </div><!-- /.col-lg-4 -->
+            </div><!-- /.row -->
+        </div>
+    </div>
+    <hr>
+
+    <footer>
+        <p>&copy; 2015 Company, Inc.</p>
+    </footer>
+    <!-- /container -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="~/css/js/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="~/css/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="~/css/js/ie10-viewport-bug-workaround.js"></script>
+
+</body>
+</html>

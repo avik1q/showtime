@@ -1,0 +1,188 @@
+﻿@model ShowTime.BindModel.ShowsOverView
+@using ShowTime.Models
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <!-- Bootstrap core CSS -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="~/css/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="~/css/js/ie-emulation-modes-warning.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="~/css/js/html5shiv.min.js"></script>
+      <script src="~/css/js/respond.min.js"></script>
+    <![endif]-->
+    <!-- Custom styles for this template -->
+    <link href="~/css/jumbotron.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+    <title>דף הבית - כרטיים להופעה</title>
+    <style>
+        .load_center {
+            padding: 1px;
+            overflow: hidden;
+            border: solid;
+            border-color: black;
+            width: 100px;
+            height: 100px;
+            border-radius: 10%;
+            box-shadow: 5px 5px 2px #888888;
+            border-width: 1px;
+        }
+
+        .show_center {
+            padding: 1px;
+            overflow: hidden;
+            border: solid;
+            border-color: black;
+            width: 225px;
+            height: 198px;
+            border-radius: 10%;
+            border-width: 1px;
+        }
+
+        table {
+            border-spacing: 0;
+            border-collapse: separate;
+        }
+    </style>
+</head>
+<body>
+    @Html.Partial("ToolBar")
+
+        <div class="jumbotron" style="text-align:center">
+            <div class="container">
+                <h1>בא לי הופעה</h1>
+                <p>ברוכים הבאים לאתר בא לי סרט כאן תוכלו להזמין כרטיסים ולהתעדכן מתי ההופעה הבאה</p>
+            </div>
+        </div>
+
+        @{
+            if (ViewData["Error"] != null)
+            {
+                <div class="alert alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <p class="text-right"><strong> שגיאה </strong> @ViewData["Error"]</p>
+
+                </div>
+            }
+            if (ViewData["Ok"] != null)
+            {
+                <div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <p class="text-right"><strong> !הפעולה עברה בהצלחה </strong> @ViewData["Ok"]</p>
+
+                </div>
+            }
+
+        }
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2" sidebar>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">מעבר מהיר</h3>
+                    </div>
+                    <div class="panel-body">
+                        @Html.ActionLink("הופעות מהעבר", "pastshow", "Home")
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="position:absolute">
+                <table width="954" border="0" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            @* <center> <div id="loading" style="color:blue;border-color:blue" class="load_center"><img src="~/pic/responsive-spinner.svg" alt="העמוד בטעינה..."><BR />...העמוד בטעינה</div></center>
+                                <div id="items"></div>*@
+                            @{
+                                for (int i = 0; i < Model.showlist.Count; i++)
+                                {
+                            <td width="224" align="right" valign="top" class="show_center">
+                                <table width="224" cellpadding="0" cellspacing="0">
+                                    <tbody style="text-align:right">
+                                        <tr width="10"><td><br /></td></tr>
+                                        <tr>
+                                            <td>
+                                                <span>
+                                                    @Model.showlist[i].Name : שם ההופעה
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>@Model.showlist[i].Date : תאריך</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>@Model.showlist[i].Loc : מקום</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>@Model.showlist[i].Price :  מחיר לכרטיס</span></td>
+                                        </tr>
+                                        @if (@Model.showlist[i].Commits != null)
+                                                {
+                                                <tr>
+                                                    <td><span>@Model.showlist[i].Commits : הערות</span></td>
+                                                </tr>
+                                                }
+                                                else
+                                                {
+                                                <tr width="10"><td><br /></td></tr>
+                                                }
+                                        @if (Session["User"] != null)
+                                                {
+                                                <tr><td><form method="get" action="~/buytiket"><input name="ref" type="hidden" value=@Model.showlist[i].ID /><input type="submit" value="קנה" /></form></td></tr>
+                                                }
+                                                else
+                                                {
+                                                <tr><td><span style="color:red">רק משתמש רשום יכול לקנות כרטיסים</span></td></tr>
+                                                }
+                                        @if (Session["Admin"] != null)
+                                                {
+                                                <tr><td><span style="color:blue">מנהל אם ברצונך לקנות כרטיסים נא הכנס כמשתמש</span></td></tr>
+                                                }
+                                    </tbody>
+                                </table>
+                            </td>
+                                    if ((i + 1) % 4 != 0)
+                                    {
+                            <td width="19"></td>
+                                    }
+                                    else
+                                    {
+                        <tr><td colspan="7" height="10"></td></tr>
+                        <tr><td colspan="7" height="1" bgcolor="#8F9394"></td></tr>
+                        <tr><td colspan="7" height="10"></td></tr>
+                                    }
+                                }
+                            }
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="~/css/js/jquery.min.js"></script>
+        <script src="~/css/js/bootstrap.min.js"></script>
+        <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+        <script src="~/css/js/holder.min.js"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="~/css/js/ie10-viewport-bug-workaround.js"></script>
+    </body>
+</html>
